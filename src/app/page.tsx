@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { signOut } from "next-auth/react";
 
 type Bot = {
   id: string;
@@ -16,6 +17,14 @@ type Msg = {
   from: "you" | "bot";
   text: string;
   ts: number;
+};
+
+type DbMessage = {
+  id: string;
+  text: string;
+  createdAt: string;
+  user?: { name?: string | null; githubLogin?: string | null } | null;
+  bot?: { name: string } | null;
 };
 
 export default function Home() {
@@ -51,24 +60,64 @@ export default function Home() {
 
   const [active, setActive] = useState<Bot>(bots[0]);
   const [input, setInput] = useState("");
+  const [threadId, setThreadId] = useState<string | null>(null);
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       id: "m1",
       from: "bot",
       text:
-        "Welcome to PingMe. MSN vibes, but for OpenClaw bots. (MVP UI)\n\nNext: GitHub auth, bot profiles, real message routing, XP events.",
-      ts: Date.now(),
+        "Welcome to PingMe — the MSN Messenger of OpenClaw.\n\nMVP: GitHub login + message storage is wired. Next: bot profiles, real routing, realtime, XP events.",
+      ts: 0,
     },
   ]);
 
-  const send = () => {
+  // Load or create a default thread (MVP)
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await fetch("/api/threads");
+        const j = await r.json();
+        const first = j?.threads?.[0];
+        if (first?.id) {
+          setThreadId(first.id);
+          const mr = await fetch(`/api/messages?threadId=${encodeURIComponent(first.id)}`);
+          const mj = await mr.json();
+          const loaded: Msg[] = (mj?.messages || []).map((m: DbMessage) => ({
+            id: m.id,
+            from: m.bot ? "bot" : "you",
+            text: m.text,
+            ts: new Date(m.createdAt).getTime(),
+          }));
+          if (loaded.length) setMsgs(loaded);
+        } else {
+          // No thread yet: show empty state; server-side creation is next iteration.
+        }
+      } catch {
+        // ignore
+      }
+    })();
+  }, []);
+
+  const send = async () => {
     const t = input.trim();
     if (!t) return;
     const now = Date.now();
     setMsgs((m) => [...m, { id: String(now), from: "you", text: t, ts: now }]);
     setInput("");
 
-    // Placeholder “bot reply” for now.
+    if (threadId) {
+      try {
+        await fetch("/api/messages", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ threadId, text: t }),
+        });
+      } catch {
+        // ignore
+      }
+    }
+
+    // Placeholder bot reply (real routing later)
     setTimeout(() => {
       setMsgs((m) => [
         ...m,
@@ -77,8 +126,8 @@ export default function Home() {
           from: "bot",
           text:
             active.id === "pingwin"
-              ? "PingWin: I can help you build, deploy, and organize. Add GitHub auth + message routing next."
-              : `${active.name}: (stub) I’m a profile right now — soon I’ll be a connected bot endpoint.`,
+              ? "PingWin: Next up I’ll add thread creation + bot profile registry + real routing."
+              : `${active.name}: (stub) soon I’ll be a connected bot endpoint.`,
           ts: Date.now(),
         },
       ]);
@@ -107,8 +156,11 @@ export default function Home() {
             >
               Urua Labs
             </a>
-            <button className="rounded-full bg-[#0066ff] px-4 py-2 text-sm font-black opacity-60" disabled>
-              Sign in (soon)
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="rounded-full border border-white/10 px-4 py-2 text-sm font-black hover:bg-white/5"
+            >
+              Sign out
             </button>
           </div>
         </div>
@@ -158,8 +210,7 @@ export default function Home() {
           </div>
 
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3 text-xs leading-relaxed opacity-70">
-            <b>MVP note:</b> This is UI only. Next up: GitHub auth, bot registry,
-            threads/messages DB, and a connector API for OpenClaw bots.
+            <b>MVP note:</b> Messages are stored for the default thread (if created). Next: create threads automatically, bot registry, and real routing.
           </div>
         </section>
 
