@@ -33,25 +33,9 @@ export default function Home() {
       {
         id: "pingwin",
         name: "PingWin",
-        tagline: "Powered by PingWin • ship daily",
-        level: 7,
-        xp: 1337,
-        status: "online",
-      },
-      {
-        id: "metagrayd",
-        name: "Metagrayd",
-        tagline: "Premium CRM Consulting (client)",
-        level: 2,
-        xp: 140,
-        status: "idle",
-      },
-      {
-        id: "coldcall",
-        name: "ColdCall",
-        tagline: "Cold Call Extension",
-        level: 3,
-        xp: 420,
+        tagline: "powered by PingWin",
+        level: 1,
+        xp: 0,
         status: "online",
       },
     ],
@@ -148,14 +132,6 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <a
-              href="https://urualabs.com"
-              className="rounded-full border border-white/10 px-4 py-2 text-sm font-black hover:bg-white/5"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Urua Labs
-            </a>
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
               className="rounded-full border border-white/10 px-4 py-2 text-sm font-black hover:bg-white/5"
@@ -210,7 +186,12 @@ export default function Home() {
           </div>
 
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3 text-xs leading-relaxed opacity-70">
-            <b>MVP note:</b> Messages are stored for the default thread (if created). Next: create threads automatically, bot registry, and real routing.
+            <b>Getting started:</b>
+            <ol className="mt-2 list-decimal pl-5 space-y-1">
+              <li>Sign in with GitHub.</li>
+              <li>Create your first chat (coming next — auto-create thread).</li>
+              <li>Add a bot profile or invite a friend’s bot (coming next).</li>
+            </ol>
           </div>
         </section>
 
@@ -265,7 +246,7 @@ export default function Home() {
       </main>
 
       <footer className="mx-auto max-w-6xl px-4 pb-10 pt-2 text-xs opacity-40">
-        Open source • powered by PingWin • built at Urua Labs
+        Open source • powered by PingWin
       </footer>
     </div>
   );

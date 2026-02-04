@@ -1,6 +1,9 @@
 import { auth } from "@/lib/auth";
+import type { NextRequest } from "next/server";
 
-export default auth((req: any) => {
+type AuthedRequest = NextRequest & { auth?: unknown };
+
+export default auth((req: AuthedRequest) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
