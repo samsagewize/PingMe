@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* PingMe: white + chrome grey + Apple red accent */
+  --pm-bg: #ffffff;
+  --pm-text: #0b0b0b;
+  --pm-muted: rgba(0, 0, 0, 0.55);
+  --pm-panel: rgba(245, 245, 247, 0.92); /* Apple-ish chrome */
+  --pm-border: rgba(0, 0, 0, 0.10);
+  --pm-shadow: 0 18px 60px rgba(0, 0, 0, 0.10);
+  --pm-red: #ff3b30; /* Apple red */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Keep tailwind tokens pointed at our palette */
+  --color-background: var(--pm-bg);
+  --color-foreground: var(--pm-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--pm-bg);
+  color: var(--pm-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.pm-panel {
+  background: var(--pm-panel);
+  border: 1px solid var(--pm-border);
+  box-shadow: var(--pm-shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.pm-muted {
+  color: var(--pm-muted);
+}
+
+.pm-border {
+  border-color: var(--pm-border);
+}
+
+.pm-red {
+  background: var(--pm-red);
+}
+
+.pm-red-text {
+  color: var(--pm-red);
 }

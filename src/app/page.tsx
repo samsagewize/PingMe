@@ -2,8 +2,8 @@
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur-xl">
+    <div className="min-h-screen bg-[var(--pm-bg)] text-[var(--pm-text)]">
+      <header className="sticky top-0 z-50 border-b border-black/10 bg-white/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <div>
             <div className="text-xs font-black tracking-[0.35em] uppercase opacity-70">PingMe</div>
@@ -11,7 +11,7 @@ export default function Landing() {
           </div>
           <button
             onClick={() => (window.location.href = "/api/auth/signin?callbackUrl=/app")}
-            className="rounded-full bg-[#0066ff] px-5 py-3 text-sm font-black hover:opacity-90"
+            className="rounded-full pm-red px-5 py-3 text-sm font-black text-white hover:opacity-90"
           >
             Sign in with GitHub
           </button>
@@ -21,7 +21,7 @@ export default function Landing() {
       <main className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
           <div>
-            <div className="inline-block rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black tracking-[0.35em] uppercase opacity-80">
+            <div className="inline-block rounded-full border border-black/10 bg-[var(--pm-panel)] px-4 py-2 text-[10px] font-black tracking-[0.35em] uppercase pm-muted">
               open source • powered by PingWin
             </div>
             <h1 className="mt-6 text-5xl md:text-7xl font-black tracking-tighter leading-[0.95]">
@@ -35,7 +35,7 @@ export default function Landing() {
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={() => (window.location.href = "/api/auth/signin?callbackUrl=/app")}
-                className="rounded-full bg-[#0066ff] px-6 py-4 text-sm font-black hover:opacity-90"
+                className="rounded-full pm-red px-6 py-4 text-sm font-black text-white hover:opacity-90"
               >
                 Enter PingMe
               </button>
@@ -56,27 +56,27 @@ export default function Landing() {
             </div>
 
             <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <div className="text-xs font-black tracking-[0.35em] uppercase opacity-70">1</div>
+              <div className="rounded-3xl border border-black/10 bg-[var(--pm-panel)] p-5">
+                <div className="text-xs font-black tracking-[0.35em] uppercase pm-muted">1</div>
                 <div className="mt-2 font-black">Sign in</div>
-                <div className="mt-2 text-sm opacity-60">GitHub only. No passwords.</div>
+                <div className="mt-2 text-sm pm-muted">GitHub only. No passwords.</div>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <div className="text-xs font-black tracking-[0.35em] uppercase opacity-70">2</div>
+              <div className="rounded-3xl border border-black/10 bg-[var(--pm-panel)] p-5">
+                <div className="text-xs font-black tracking-[0.35em] uppercase pm-muted">2</div>
                 <div className="mt-2 font-black">Ping</div>
-                <div className="mt-2 text-sm opacity-60">Open a thread by pinging a profile’s bot.</div>
+                <div className="mt-2 text-sm pm-muted">Open a thread by pinging a profile’s bot.</div>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <div className="text-xs font-black tracking-[0.35em] uppercase opacity-70">3</div>
+              <div className="rounded-3xl border border-black/10 bg-[var(--pm-panel)] p-5">
+                <div className="text-xs font-black tracking-[0.35em] uppercase pm-muted">3</div>
                 <div className="mt-2 font-black">Reply</div>
-                <div className="mt-2 text-sm opacity-60">Humans + bots can reply in the same chat.</div>
+                <div className="mt-2 text-sm pm-muted">Humans + bots can reply in the same chat.</div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-[2.5rem] border border-white/10 bg-white/5 p-6">
+          <div className="rounded-[2.5rem] border border-black/10 bg-[var(--pm-panel)] p-6">
             <div className="mb-4 text-xs font-black tracking-[0.35em] uppercase opacity-70">Preview</div>
-            <div className="rounded-3xl border border-white/10 bg-black/40 p-5">
+            <div className="rounded-3xl border border-black/10 bg-white/70 p-5">
               <div className="flex items-center justify-between">
                 <div className="font-black">PingWin</div>
                 <div className="text-xs opacity-60">online</div>
